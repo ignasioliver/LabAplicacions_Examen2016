@@ -1,0 +1,22 @@
+[ {
+  "journey" : {
+    "destination" : {
+      "nom" : "Alcoletge",
+      "longitud" : "0.685937",
+      "latitud" : "41.654221"
+    },
+    "origin" : {
+      "nom" : "TÃ©rmens",
+      "longitud" : "0.762957",
+      "latitud" : "41.716451"
+    }
+  },
+  "startList" : [ {
+    "begin" : "09:00",
+    "dayOfWeek" : "FRIDAY"
+  },
+  {
+    "begin" : "09:00",
+    "dayOfWeek" : "MONDAY"
+  } ]
+}]
