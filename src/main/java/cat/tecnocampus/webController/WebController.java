@@ -6,6 +6,7 @@ import cat.tecnocampus.domainController.FgcController;
 import cat.tecnocampus.exception.UserDoesNotExistsException;
 import cat.tecnocampus.restController.MyRestController;
 import org.json.*;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
+import java.awt.*;
 import java.security.Principal;
 import java.util.ArrayList;
 
@@ -122,17 +124,18 @@ public class WebController {
 
 
 
-    /* REFERENT A TODO 6
-    @GetMapping("/api/stations")
+    /* REFERENT A TODO 6 */
+/*    @GetMapping(value = "/api/stations/v2", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public JSONArray station() {
         return API.StationJSONArray();
     }
 
-    @GetMapping("/api/users")
+    @GetMapping(value = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public JSONArray user() {
         return API.UserJSONArray();
-    }
-    */
+    }*/
+
 
 }

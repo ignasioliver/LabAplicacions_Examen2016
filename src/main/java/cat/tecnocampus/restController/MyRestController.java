@@ -5,9 +5,8 @@ import cat.tecnocampus.domain.User;
 import cat.tecnocampus.domainController.FgcController;
 
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,23 +35,22 @@ public class MyRestController {
 
     }
 
-    @GetMapping(value = "api/stations", produces = MediaType.APPLICATION_JSON_VALUE)
-    public JSONArray UserJSONArray(){
+    @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String UserJSONArray(){
         JSONArray ja = new JSONArray();
         for (User element : fgcController.getUsers()){
             ja.put(element);
         }
-        return ja;
+        return ja.toString();
     }
 
-    public JSONArray StationJSONArray(){
+    @GetMapping(value = "/stations", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String StationJSONArray(){
         JSONArray ja = new JSONArray();
         for (Station element : fgcController.getStationsFromRepository()){
             ja.put(element);
         }
-        return ja;
+        return ja.toString();
     }
-
-
 
 }
