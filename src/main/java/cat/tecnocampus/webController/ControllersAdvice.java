@@ -38,6 +38,7 @@ public class ControllersAdvice {
     /*
     TODO 5.1  exception UserDoesNotExistsException
      */
+    @ExceptionHandler(UserDoesNotExistsException.class)
     public String handleUserDoesNotExist(UserDoesNotExistsException exception, Model model) {
         model.addAttribute("username", exception.getUsername());
 
@@ -47,6 +48,7 @@ public class ControllersAdvice {
     /*
     TODO 5.2  exception UserDoesNotExistsException
      */
+    @ExceptionHandler(UserDoesNotExistsException.class)
     public String handleUsernameDoesNotExist(Model model, HttpServletRequest request, Exception ex) {
         String url = request.getRequestURL().toString();
 
@@ -59,6 +61,7 @@ public class ControllersAdvice {
     /*
     TODO 5.3 exception SameOriginDestinationException
      */
+    @ExceptionHandler(SameOriginDestinationException.class)
     public String handleSameOriginDestination(Model model, HttpServletRequest request) {
         ArrayList<String> myErrors = new ArrayList<>();
         myErrors.add("Origin and destination must be different");

@@ -16,14 +16,18 @@ public class DayTimeStart {
         HINT: is a pattern for a time of the day "hh:mm"
 
         * YOUR ANSWER:
+        * Es un patro per les hores, si val 1 com a maxim el segon valor pot valdre 9. Si el primer valor es un
+        * 2 el segon valor pot ser com a maxim un 3.
+        * El primer valor de les hores pot valdre com a maxim 5 i el segon com a maxim 9 (59 minuts).
 
     */
 
     /*
     TODO 4.1 (Follow pattern) ensure that the timeStart property follows the above regrep expression (the one in 4.0)
         HINT
-        * add an annotation
-    */
+        * add an annotation */
+
+    @Pattern(regexp = "^([0,1][0-9]|2[0-3]):[0-5][0-9]$")
     @NotNull(message = "Start time cannot be null")
     private String timeStart;
 

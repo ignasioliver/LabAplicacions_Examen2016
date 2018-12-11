@@ -1,14 +1,18 @@
 package cat.tecnocampus.webController;
 
+import cat.tecnocampus.domain.DayTimeStart;
 import cat.tecnocampus.domain.FavoriteJourney;
 import cat.tecnocampus.domainController.FgcController;
 import cat.tecnocampus.exception.UserDoesNotExistsException;
+import cat.tecnocampus.restController.MyRestController;
+import org.json.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -18,13 +22,19 @@ import java.util.ArrayList;
  * Created by roure on 14/11/2016.
  */
 @Controller
+
 public class WebController {
 
     private FgcController fgcController;
 
-    public WebController(FgcController fgcController) {
+    /* REFERENT A TODO 6*/
+    private MyRestController API;
+
+    public WebController(FgcController fgcController, MyRestController API) {
         this.fgcController = fgcController;
+        this.API = API;
     }
+
 
     @GetMapping("/stations")
     public String getStations(Model model) {
@@ -38,6 +48,9 @@ public class WebController {
     public String getAddFavoriteJourney(Principal principal, Model model) {
 
         fillModelForNewFavoriteJourney(model, principal, new FavoriteJourney());
+        fillModelForNewFavoriteJourney(model, principal, new FavoriteJourney());
+        model.addAttribute("stationList", fgcController.getStationsFromRepository());
+
         return "newFavoriteJourney";
     }
 
@@ -49,7 +62,7 @@ public class WebController {
             * You'll need to add the same annotation in another file/class
      */
     @PostMapping("/user/favoriteJourney")
-    public String postAddFavoriteJourney(Principal principal, FavoriteJourney favoriteJourney, Errors errors, Model model) {
+    public String postAddFavoriteJourney(Principal principal,@Valid FavoriteJourney favoriteJourney, Errors errors, Model model) {
 
         if (errors.hasErrors()) {
             fillModelForNewFavoriteJourney(model, principal, favoriteJourney);
@@ -63,7 +76,7 @@ public class WebController {
         return "redirect:/user/favoriteJourneys";
     }
 
-    private void fillModelForNewFavoriteJourney(Model model, Principal principal, FavoriteJourney favoriteJourney) {
+    private void fillModelForNewFavoriteJourney(Model model, Principal principal, @Valid FavoriteJourney favoriteJourney) {
         model.addAttribute("username", principal.getName());
         model.addAttribute("stationList", fgcController.getStationsFromRepository());
         model.addAttribute("favoriteJourney", favoriteJourney);
@@ -106,4 +119,20 @@ public class WebController {
 
         return "user";
     }
+
+
+
+    /* REFERENT A TODO 6
+    @GetMapping("/api/stations")
+    @ResponseBody
+    public JSONArray station() {
+        return API.StationJSONArray();
+    }
+
+    @GetMapping("/api/users")
+    public JSONArray user() {
+        return API.UserJSONArray();
+    }
+    */
+
 }

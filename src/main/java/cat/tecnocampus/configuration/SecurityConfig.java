@@ -45,11 +45,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /*
     TODO 1 (Security): modify the matchers so that
-        * /h2-console (and bellow), /stations, /byebye, api (and bellow) should be accessed by the whole world
-        * /user (and bellow), /welcome should only be accessed by logged in users
-        * /users (and bellow) should only be accessed by ADMIN users
-        * The rest of links should only be accessed by logged in users
-        * When a user logs in the system always redirects him to welcome. Whe want it to go to the protected resource he
+        * /h2-console (and below), /stations, /byebye, api (and below) should be accessed by the whole world
+ 8
+        *X /users (and bellow) should only be accessed by ADMIN users
+        *X The rest of links should only be accessed by logged in users
+        *X When a user logs in the system always redirects him to welcome. We want it to go to the protected resource he
           was trying to access (when he was not logged in yet)
      HINT: you may need to modify some of the already existing matchers, delete existing ones and/or add new ones
      */
@@ -57,14 +57,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .mvcMatchers("/**").permitAll()
+                    //.mvcMatchers("/**").permitAll()
                     .antMatchers("/h2-console/**").permitAll()
                     .mvcMatchers("/stations").permitAll()
                     .antMatchers("/byebye").permitAll()
                     .antMatchers("/api/**").permitAll()
+                    .antMatchers("/users/**").hasRole("ADMIN")
+                    .antMatchers("/**").authenticated()
                 .and()
                 .formLogin() //a login form is showed when no authenticated request
-                    .successForwardUrl("/welcome")
+                    //.successForwardUrl("/welcome")
+                    // By default, if nothing is specified the user is redirected to the page it was before
                 .and()
                 .rememberMe()
                     .tokenValiditySeconds(2419200)

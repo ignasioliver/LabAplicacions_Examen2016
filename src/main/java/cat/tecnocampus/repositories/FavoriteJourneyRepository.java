@@ -21,6 +21,8 @@ public class FavoriteJourneyRepository {
     JdbcTemplate jdbcTemplate;
     JourneyRepository journeyRepository;
 
+    private final String TOINSERT = "INSERT INTO day_time_start(timeStart, day_of_week, favorite_journey_id) values(?, ?, ?)";
+
     public FavoriteJourneyRepository(JdbcTemplate jdbcTemplate, JourneyRepository journeyRepository) {
         this.jdbcTemplate = jdbcTemplate;
         this.journeyRepository = journeyRepository;
@@ -63,7 +65,19 @@ public class FavoriteJourneyRepository {
         * All inserts must be done at once (I don't want an insert for each object in the list)
      */
     private int[] saveDayTimeStart(List<DayTimeStart> start, long favoriteJourneyId) {
-        return new int[]{}; //you'll want to delete this line
+         return jdbcTemplate.batchUpdate(TOINSERT, new BatchPreparedStatementSetter() {
+
+                public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
+                    preparedStatement.setString(1, start.get(i).getTimeStart());
+                    preparedStatement.setString(2, start.get(i).getDayOfWeek());
+                    preparedStatement.setLong(3, favoriteJourneyId);
+                }
+
+                @Override
+                public int getBatchSize() {
+                    return start.size();
+                }
+         });
     }
 
     private List<DayTimeStart> findDayTimeStart(long favoriteJourneyId) {

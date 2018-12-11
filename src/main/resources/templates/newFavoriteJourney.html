@@ -49,13 +49,20 @@
 -->
     <label th:class="${#lists.size(myErrors)>0}? 'error'">Origin:</label>
     <select name="journey.origin.nom">
-        <option>Station name (nom)
-        </option>
+        <div th:each="favoriteJourney : ${stationList}">
+            <option th:text="${favoriteJourney.nom}">Station name (nom)
+            </option>
+
+        </div>
+
     </select>
     <label th:class="${#lists.size(myErrors)>0}? 'error'">Destination:</label>
     <select name="journey.destination.nom">
-        <option>Station name (nom)
-        </option>
+        <div th:each="favoriteJourney : ${stationList}">
+            <option th:text="${favoriteJourney.nom}">Station name (nom)
+            </option>
+
+        </div>
     </select>
     <br/>
     <br/>
